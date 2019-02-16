@@ -1,4 +1,4 @@
-# webpack-js-sass-config
+# Webpack 4 HTML, JavaScript, SASS
 
 Webpack config for HTML, SASS, JavaScript (with Babel) and hashing
 
