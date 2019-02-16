@@ -1,6 +1,6 @@
 # Webpack 4 HTML, JavaScript, SASS
 
-Webpack config for HTML, SASS, JavaScript (with Babel) and hashing
+Webpack config for HTML, SASS, PostCSS, JavaScript (with Babel) and hashing
 
 ### Entry point: 
 ```
@@ -8,7 +8,7 @@ Webpack config for HTML, SASS, JavaScript (with Babel) and hashing
 ```
 ### Output path: 
 ```
-./docs/ (for GutHub pages)
+./docs/ (for GitHub pages)
 ```
 
 ### Development: 
