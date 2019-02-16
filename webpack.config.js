@@ -10,6 +10,23 @@ module.exports = {
     path: path.resolve(__dirname, "docs"),
     filename: "[name].[chunkhash].js"
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendors: {
+          test: /node_modules/,
+          chunks: 'initial',
+          name: 'vendor',
+          enforce: true
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    },
+  },
   devServer: {
     overlay: true
   },
@@ -35,7 +52,7 @@ module.exports = {
     ]
   },
   plugins: [
-    // new CleanWebpackPlugin("docs", {}), //DELETE PROD DIR
+    new CleanWebpackPlugin("docs", {}), //DELETE PROD DIR
     new MiniCssExtractPlugin({
       filename: "style.[contenthash].css"
     }),
