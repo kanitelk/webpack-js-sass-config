@@ -3,20 +3,22 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackMd5Hash = require("webpack-md5-hash");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-module.exports = {
+conf = {
   entry: { main: "./src/index.js" },
   output: {
     path: path.resolve(__dirname, "docs"),
     filename: "[name].[chunkhash].js"
   },
+  devtool: "eval-source-map",
   optimization: {
     splitChunks: {
       cacheGroups: {
         vendors: {
           test: /node_modules/,
-          chunks: 'initial',
-          name: 'vendor',
+          chunks: "initial",
+          name: "vendor",
           enforce: true
         },
         default: {
@@ -25,7 +27,7 @@ module.exports = {
           reuseExistingChunk: true
         }
       }
-    },
+    }
   },
   devServer: {
     overlay: true
@@ -52,7 +54,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin("docs", {}), //DELETE PROD DIR
+    new CleanWebpackPlugin(["docs/*.*"], {}), //DELETE PROD DIR
     new MiniCssExtractPlugin({
       filename: "style.[contenthash].css"
     }),
@@ -64,4 +66,16 @@ module.exports = {
     }),
     new WebpackMd5Hash()
   ]
+};
+
+module.exports = (env, options) => {
+  let production = options.mode === "production";
+  conf.devtool = production ? false : "eval-sourcemap";
+
+  if (production)
+    conf.plugins = [
+      ...conf.plugins,
+      new CopyWebpackPlugin([{ from: "./src/assets", to: "./assets" }])
+    ];
+  return conf;
 };
